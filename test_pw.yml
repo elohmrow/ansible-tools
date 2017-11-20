@@ -1,8 +1,0 @@
----
-- name: Provision an EC2 instance for a Magnolia instrumentation server
-  hosts: local
-  connection: local
-  roles:
-    - {
-        role: install-grafana-config
-      }
