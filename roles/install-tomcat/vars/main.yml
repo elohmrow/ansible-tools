@@ -1,0 +1,6 @@
+#
+# Tomcat installation variables
+#
+
+# default Tomcat version (v8.5)
+tomcat_version: tomcat8

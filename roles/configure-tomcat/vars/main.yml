@@ -1,0 +1,20 @@
+#
+# Install Tomcat configuration for Magnolia
+#
+
+# Tomcat service directory, for creation of tomcat8.conf
+tomcat_service_path: /etc/tomcat8
+
+# environment parameters for magnolia.properties
+magnolia_repositories_home: /opt/magnolia/repository
+magnolia_bootstrap_authorInstance: "true"
+magnolia_deploy_db: mysql
+
+# environment parameters for selected Jackrabbit configuration
+magnolia_deploy_db_url: jdbc:mysql://localhost:3306/magnolia
+magnolia_deploy_db_user: magnolia
+magnolia_deploy_db_password: "{{ lookup('password', 'save/magnolia/db/{{ ansible_hostname }} chars=ascii_letters,digits length=16') }}"
+
+# JVM configuration parameters
+java_start_heap: 512m
+java_max_heap: 1024m

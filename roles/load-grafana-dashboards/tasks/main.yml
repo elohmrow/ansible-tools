@@ -1,0 +1,14 @@
+---
+- debug:
+    msg: "inventory_hostname = {{ inventory_hostname }} target url = http://{{ inventory_hostname }}:3000/api/datasources user = {{ grafana_admin_user }} password = {{ grafana_admin_password }}"
+
+- name: add Prometheus datasource to Grafana
+  uri:
+    url: "http://{{ inventory_hostname }}:3000/api/datasources"
+    method: POST
+    user: "{{ grafana_admin_user }}"
+    password: "{{ grafana_admin_password }}"
+    body_format: json
+    body: "{{ lookup('template', 'prometheus_ds.json') }}"
+    force_basic_auth: yes
+    status_code: 200

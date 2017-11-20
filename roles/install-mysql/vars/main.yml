@@ -1,0 +1,10 @@
+#
+# MySQL installation variables
+#
+
+# default MySQL server version (v5.7)
+mysqlserver_name: mysql57-server
+
+mysqlconfig_name: mysql-config
+
+python_version: /usr/bin/python2.6

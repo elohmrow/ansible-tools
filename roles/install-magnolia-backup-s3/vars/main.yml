@@ -1,0 +1,19 @@
+#
+# Magnolia Backup Bundle installation variables
+#
+
+magnolia_backup_home: /opt/magnolia/backups
+
+s3_backup_bucket: aw-experimental
+s3_backup_path: extras/backup
+s3_backup_bundle: magnolia-module-backup-2.2-bundle.tgz
+
+s3_magnolia_bucket: aw-experimental
+s3_magnolia_path: magnolia
+
+backup_bin: /opt/magnolia/backups/magnolia-module-backup-2.2/bin
+
+# environment parameters for selected Jackrabbit configuration
+magnolia_deploy_db_url: jdbc:mysql://localhost:3306/magnolia
+magnolia_deploy_db_user: magnolia
+magnolia_deploy_db_password: "{{ lookup('password', 'save/magnolia/db/{{ ansible_hostname }} chars=ascii_letters,digits length=16') }}"

@@ -1,0 +1,9 @@
+---
+- name: Install Prometheus configuration for monitoring Magnolia
+  become: true
+  template:
+    src: "{{ magnolia_instrumentation_src }}"
+    dest: "{{ magnolia_instrumentation_dest }}"
+    owner: ec2-user
+    group: ec2-user
+    mode: 0644

@@ -1,0 +1,8 @@
+---
+- name: Install Grafana configuration for monitoring Magnolia
+  become: true
+  template:
+    src: "{{ grafana_config_src }}"
+    dest: "{{ grafana_config_dest }}"
+    mode: 0644
+    backup: yes

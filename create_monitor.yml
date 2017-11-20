@@ -1,0 +1,77 @@
+---
+- name: Provision an EC2 instance for a Magnolia instrumentation server
+  hosts: local
+  connection: local
+  gather_facts: false
+  roles:
+    - {
+        role: provision-ec2,
+        aws_security_group: "instrumentation-dynamic",
+        aws_keypair: "instrumentation-server",
+        server_group: "aws-provisioning",
+        keypairs_location: "/Users/awarinner/dev/magnolia/magnoliaEE/instrumentation/ansible/keys",
+        keypair_file: "instrumentation-server.pem"
+      }
+    - {
+        role: dump-ec2-servers,
+        inventory_path: "/Users/awarinner/dev/magnolia/magnoliaEE/instrumentation/ansible/aws_hosts",
+        inventory_keypair_file: "/Users/awarinner/dev/magnolia/magnoliaEE/instrumentation/ansible/keys/instrumentation-server.pem",
+        inventory_group: "instrumentationservers"
+      }
+
+- name: Update EC2 instance
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: update-ec2
+      }
+
+- name: Install Prometheus on provisioned EC2 instances
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: install-prometheus,
+        server_group: "aws-provisioning"
+      }
+
+- name: Install Prometheus configuration for monitoring Magnolia
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: install-prometheus-config
+      }
+
+- name: Launch Prometheus
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: launch-prometheus
+      }
+
+- name: Install Grafana
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: install-grafana
+      }
+
+- name: Install Grafana configuration for monitoring Magnolia
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: install-grafana-config
+      }
+
+- name: Launch Grafana
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: launch-grafana
+      }
+
+- name: Load Grafana dashboards
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: load-grafana-dashboards
+      }

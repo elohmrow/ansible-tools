@@ -1,0 +1,79 @@
+---
+- name: Provision an EC2 instance for a Magnolia instrumentation server
+  hosts: local
+  connection: local
+  gather_facts: false
+  roles:
+    - {
+        role: provision-ec2,
+        aws_name: "raw-dev-magnolia",
+        aws_instance_type: "t2.micro",
+        aws_image: "ami-204a5544",
+        aws_region: "eu-west-2",
+        aws_security_group: "raw-experimental",
+        aws_keypair: "raw-experimental",
+        server_group: "aws-provisioning",
+        keypairs_location: "/Users/awarinner/dev/magnolia/magnoliaEE/instrumentation/ansible/keys",
+        keypair_file: "raw-experimental.pem"
+      }
+    - {
+        role: dump-ec2-servers,
+        inventory_path: "/Users/awarinner/dev/magnolia/magnoliaEE/instrumentation/ansible/aws_hosts",
+        inventory_keypair_file: "/Users/awarinner/dev/magnolia/magnoliaEE/instrumentation/ansible/keys/raw-experimental.pem",
+        inventory_group: "magnoliaservers"
+      }
+
+- name: Update EC2 instance
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: update-ec2
+      }
+
+- name: Install MySQL server
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: install-mysql
+      }
+
+- name: start MySQL server
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: launch-mysql
+      }
+
+- name: create Magnolia database
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: create-magnolia-db
+      }
+
+- name: Install Java 8
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: install-java
+      }
+
+- name: Install Tomcat
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: install-tomcat
+      }
+
+- name: Configure Tomcat
+  hosts: aws-provisioning
+  roles:
+    - {
+        role: configure-tomcat
+      }
+
+#
+# TBD:
+# deploy Magnolia WAR from S3
+# start Tomcat
+#

@@ -1,0 +1,15 @@
+#
+# Variable definitions for running Prometheus to monitor Magnolia
+#
+
+prometheus_version: 1.8.1
+prometheus_arch: linux-amd64
+
+# installation directory for Prometheus per version and architecture
+prometheus_home: "/opt/prometheus-{{ prometheus_version }}.{{ prometheus_arch }}"
+
+# Prometheus output file
+prometheus_out: "{{ prometheus_home }}/prometheus.out"
+
+# configuration file for monitoring Magnolia
+magnolia_config: "{{ prometheus_home }}/magnolia_config.yml"

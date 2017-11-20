@@ -1,0 +1,16 @@
+#
+# Install Grafana configuration for monitoring Magnolia
+#
+
+# grafana admin user name
+grafana_admin_user: admin
+grafana_admin_password: "{{ lookup('password', 'save/{{ ansible_hostname }} chars=ascii_letters,digits length=16') }}"
+
+# http port for grafana
+grafana_port: 3000
+
+# grafana config source, original was copied from grafana rpm installation
+grafana_config_src: grafana.ini
+
+# grafana config destination, per rpm installation
+grafana_config_dest: /etc/grafana/grafana.ini

@@ -1,0 +1,21 @@
+---
+- name: Install MySQL server with yum
+  become: true
+  yum:
+    name: "{{ mysqlserver_name }}"
+    state: present
+
+- name: Install extras for MySQL with yum
+  become: true
+  yum:
+    name: "MySQL-python"
+    state: present
+
+#
+# Ansible MySQL tasks only work with Python 2.6, specifically MySQL-python above
+#
+- name: Select Python 2.6 version
+  become: true
+  alternatives:
+    name: python
+    path: "{{ python_version }}"

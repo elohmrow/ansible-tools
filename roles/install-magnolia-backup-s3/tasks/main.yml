@@ -1,0 +1,76 @@
+---
+- name: Load AWS keys
+  include_vars: "aws_keys.yml"
+
+- name: create Magnolia home directory for backups
+  become: true
+  file:
+    path: "{{ magnolia_backup_home }}"
+    state: directory
+    owner: ec2-user
+    group: ec2-user
+    mode: 0755
+
+- name: create Magnolia directory for backups
+  become: true
+  file:
+    path: "{{ magnolia_backup_home }}/save"
+    state: directory
+    owner: ec2-user
+    group: ec2-user
+    mode: 0755
+
+- name: create Magnolia directory for JCR repo configurations
+  become: true
+  file:
+    path: "{{ magnolia_backup_home }}/config"
+    state: directory
+    owner: ec2-user
+    group: ec2-user
+    mode: 0755
+
+- name: get Magnolia Backup bundle from S3
+  aws_s3:
+    aws_access_key: "{{ magnolia_aws_access_key }}"
+    aws_secret_key: "{{ magnolia_aws_secret_key }}"
+    bucket: "{{ s3_backup_bucket }}"
+    object: "{{ s3_backup_path }}/{{ s3_backup_bundle }}"
+    dest: "{{ magnolia_backup_home }}/{{ s3_backup_bundle }}"
+    mode: get
+
+- name: unpack the Backup bundle
+  unarchive:
+    src: "{{ magnolia_backup_home}}/{{ s3_backup_bundle }}"
+    dest: "{{ magnolia_backup_home }}"
+    remote_src: yes
+
+- name: add in extra config
+  become: true
+  template:
+    src: tools.conf
+    dest: "{{ backup_bin }}/tools.conf"
+    mode: 0644
+    owner: ec2-user
+    group: ec2-user
+    backup: yes
+
+- name: get Magnolia JCR configs from S3
+  aws_s3:
+    aws_access_key: "{{ magnolia_aws_access_key }}"
+    aws_secret_key: "{{ magnolia_aws_secret_key }}"
+    bucket: "{{ s3_magnolia_bucket }}"
+    object: "{{ s3_magnolia_path }}/{{ item }}"
+    dest: "{{ magnolia_backup_home }}/config/{{ item }}"
+    mode: get
+  with_items:
+    - jackrabbit-bundle-derby-search.xml
+    - jackrabbit-bundle-ingres-search.xml
+    - jackrabbit-bundle-postgres-search.xml
+    - jackrabbit-bundle-h2-search.xml
+    - jackrabbit-bundle-mysql-search.xml
+    - jackrabbit-memory-search.xml
+
+- name: clean up
+  file:
+    path: "{{ magnolia_backup_home }}/{{ s3_backup_bundle }}"
+    state: absent

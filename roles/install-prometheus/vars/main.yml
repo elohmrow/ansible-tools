@@ -1,0 +1,35 @@
+#
+# Prometheus installation variables
+#
+
+#
+# Variables for downloading Prometheus
+#
+
+# target servers
+server_group: dummy_server_group
+
+# download location
+target_dir: /tmp
+
+# Prometheus version
+prometheus_version: 1.8.1
+
+# Prometheus_architecture
+prometheus_arch: linux-amd64
+
+prometheus_target: "prometheus-{{ prometheus_version }}.{{ prometheus_arch }}.tar.gz"
+
+# Prometheus download url
+prometheus_url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/{{ prometheus_target }}"
+
+# Prometheus download destination
+prometheus_dest: "{{ target_dir }}/{{ prometheus_target }}"
+
+# Prometheus checksum
+prometheus_checksum: sha256:fd33edb48ea04f275ea630b7a90bb882aeb9318a1fa94e4e3b1afab060538251
+
+#
+# Variables for installing Prometheus
+#
+prometheus_install_root: /opt

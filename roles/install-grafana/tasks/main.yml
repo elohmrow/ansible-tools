@@ -1,0 +1,6 @@
+---
+- name: Install Grafana rpm from a remote repo
+  become: true
+  yum:
+    name: "{{ grafana_rpm }}"
+    state: present

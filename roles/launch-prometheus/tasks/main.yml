@@ -1,0 +1,11 @@
+---
+- name: Start Prometheus in background
+  become: true
+  become_user: ec2-user
+  shell: "nohup ./prometheus -config.file={{ magnolia_config }} >> {{ prometheus_out}} 2>&1 &"
+  args:
+    chdir: "{{ prometheus_home }}"
+
+#
+# need some bulletproofing here in case Prometheus does not start up
+#

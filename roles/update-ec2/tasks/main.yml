@@ -1,0 +1,24 @@
+---
+- name: Update EC2 instance with yum
+  become: true
+  yum:
+    name: '*'
+    state: latest
+
+- name: Install Python 2.6 with yum, will be needed later by MySQL tasks
+  become: true
+  yum:
+    name: "python26"
+    state: latest
+
+- name: Install boto3 for Python 2.6 with yum
+  become: true
+  yum:
+    name: "python26-boto3"
+    state: latest
+
+- name: Install boto3 for Python 2.7 with yum
+  become: true
+  yum:
+    name: "python27-boto3"
+    state: latest

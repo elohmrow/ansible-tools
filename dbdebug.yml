@@ -1,0 +1,8 @@
+---
+- hosts: fubar
+  connection: ssh
+  tasks:
+    - mysql_db:
+        name: "fubar"
+        login_user: "root"
+        state: present

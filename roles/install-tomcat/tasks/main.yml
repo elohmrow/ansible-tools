@@ -1,0 +1,6 @@
+---
+- name: Install Tomcat with yum
+  become: true
+  yum:
+    name: "{{ tomcat_version }}"
+    state: present

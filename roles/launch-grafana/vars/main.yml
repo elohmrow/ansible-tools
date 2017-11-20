@@ -1,0 +1,6 @@
+#
+# Variable definitions for running Grafana to monitor Magnolia
+#
+
+# stderr, stdio log file for Grafana
+grafana_out: /var/log/grafana/grafana.log

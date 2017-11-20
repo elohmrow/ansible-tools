@@ -1,0 +1,15 @@
+---
+- name: Download selected Prometheus version
+  get_url:
+    url: "{{ prometheus_url }}"
+    dest: "{{ prometheus_dest }}"
+    checksum: "{{ prometheus_checksum }}"
+
+- name: Unpack Prometheus download
+  become: true
+  unarchive:
+    src: "{{ prometheus_dest }}"
+    dest: "{{ prometheus_install_root }}"
+    remote_src: yes
+    owner: ec2-user
+    group: ec2-user

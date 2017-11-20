@@ -1,0 +1,6 @@
+---
+- name: Start MySQL server
+  become: true
+  service:
+    name: mysqld
+    state: started

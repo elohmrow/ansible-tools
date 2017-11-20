@@ -1,0 +1,17 @@
+---
+- name: Install environment settings for Tomcat service
+  become: true
+  template:
+    src: tomcat8.conf
+    dest: "{{ tomcat_service_path }}/tomcat8.conf"
+    mode: 0644
+    backup: yes
+
+- name: create Magnolia repository home directory
+  become: true
+  file:
+    path: "{{ magnolia_repositories_home }}"
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 0755

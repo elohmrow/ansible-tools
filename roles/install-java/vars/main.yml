@@ -1,0 +1,12 @@
+#
+# Java installation variables
+#
+
+# use Python 2.7
+python_version: /usr/bin/python2.7
+
+# default Java version (v1.8.0) to install
+java_version: java-1.8.0
+
+# JRE version to use
+jre_version: /usr/lib/jvm/jre-1.8.0-openjdk.x86_64/bin/java

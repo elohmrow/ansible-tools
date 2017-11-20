@@ -1,0 +1,10 @@
+#
+# AWS specific variables
+#
+
+aws_image_name: configureme
+aws_image_timestamp: "{{lookup('pipe','date +%Y%m%d%H%M%S')}}"
+aws_image_service: configureme
+aws_image_version: configureme
+
+wait_until_available: no

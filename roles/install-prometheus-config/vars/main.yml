@@ -1,0 +1,27 @@
+#
+# Prometheus instrumentation settings for monitoring Magnolia
+#
+
+# Prometheus job name for monitoring Magnolia
+magnolia_instrumentation_job: magnolia-job
+
+# how often Prometheus will scrap Magnolia (default 5s)
+magnolia_scrape_interval: 5s
+
+# Context path for Magnolia (default is empty, e.g. at root)
+magnolia_context_path: ""
+
+# login credentials for Magnolia (default superuser/superuser)
+magnolia_user: superuser
+magnolia_password: superuser
+
+# Magnolia server name (plus port). Be sure to specify this!
+magnolia_server: configureme.com:8080
+
+# prometheus config source template
+magnolia_instrumentation_src: prometheus_instrumentation.yml
+
+# prometheus config destination
+prometheus_version: 1.8.1
+prometheus_arch: linux-amd64
+magnolia_instrumentation_dest: "/opt/prometheus-{{ prometheus_version }}.{{ prometheus_arch }}/magnolia_config.yml"

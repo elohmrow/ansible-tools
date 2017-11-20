@@ -1,0 +1,23 @@
+global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+    monitor: 'magnolia-instrumentation'
+
+scrape_configs:
+# Scrape Magnolia!
+- job_name: '{{ magnolia_instrumentation_job }}'
+
+  # Override the global default and scrape targets from this job every 5 seconds.
+  scrape_interval: {{ magnolia_scrape_interval }}
+
+  metrics_path: {{ magnolia_context_path }}/.monitoring/scrape
+
+  basic_auth:
+    username: {{ magnolia_user }}
+    password: {{ magnolia_password }}
+
+  static_configs:
+    - targets: ['{{ magnolia_server }}']

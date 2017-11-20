@@ -1,0 +1,9 @@
+#
+# Install Grafana configuration for monitoring Magnolia
+#
+
+grafana_admin_user: admin
+grafana_admin_password: "{{ lookup('password', 'save/{{ ansible_hostname }} chars=ascii_letters,digits length=16') }}"
+
+prometheus_host: "{{ inventory_hostname }}"
+prometheus_port: 9090

@@ -1,0 +1,9 @@
+#
+# Magnolia database variables
+#
+
+# database name for Magnolia's database
+magnolia_db_name: magnolia
+
+magnolia_db_user: magnolia
+magnolia_db_password: "{{ lookup('password', 'save/magnolia/db/{{ ansible_hostname }} chars=ascii_letters,digits length=16') }}"

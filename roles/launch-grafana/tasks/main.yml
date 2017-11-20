@@ -1,0 +1,6 @@
+---
+- name: Start Grafana service
+  become: true
+  service:
+    name: grafana-server
+    state: started

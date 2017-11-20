@@ -1,0 +1,15 @@
+---
+- name: Create a new database for Magnolia use
+  mysql_db:
+    name: "{{ magnolia_db_name }}"
+    login_user: "root"
+    state: present
+
+- name: Create a user for the Magnolia database
+  mysql_user:
+    host: "%"
+    name: "{{ magnolia_db_user }}"
+    password: "{{ magnolia_db_password }}"
+    login_user: root
+    priv: "{{ magnolia_db_name }}.*:ALL,GRANT"
+    state: present
