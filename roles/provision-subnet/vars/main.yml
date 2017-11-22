@@ -1,0 +1,9 @@
+#
+# AWS specific variables
+#
+
+aws_subnet_name: configureme
+aws_subnet_cidr: configureme
+aws_subnet_description: Magnolia subnet
+aws_subnet_region: configureme
+aws_subnet_az: configure me

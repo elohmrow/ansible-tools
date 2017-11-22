@@ -1,0 +1,17 @@
+---
+- name: Load AWS keys
+  include_vars: "aws_keys.yml"
+
+- name: "Provision AWS subnet \"{{ aws_subnet_description }}\" per VPC(s)"
+  ec2_vpc_subnet:
+    aws_access_key: "{{ magnolia_aws_access_key }}"
+    aws_secret_key: "{{ magnolia_aws_secret_key }}"
+    state: present
+    vpc_id: "{{ vpc.vpc.id }}"
+    cidr: "{{ aws_subnet_cidr }}"
+    region: "{{ aws_subnet_region }}"
+    az: "{{ aws_subnet_az }}"
+    resource_tags:
+      Name: "{{ aws_subnet_name }}"
+      Description: "{{ aws_subnet_description }}"
+  register: subnets

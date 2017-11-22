@@ -11,6 +11,10 @@
     name: "MySQL-python"
     state: present
 
+- name: Setup to launch MySQL on startup
+  become: true
+  shell: chkconfig mysqld on
+
 #
 # Ansible MySQL tasks only work with Python 2.6, specifically MySQL-python above
 #

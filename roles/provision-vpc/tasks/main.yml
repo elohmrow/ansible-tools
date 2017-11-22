@@ -1,0 +1,16 @@
+---
+- name: Load AWS keys
+  include_vars: "aws_keys.yml"
+
+- name: Provision AWS VPC
+  ec2_vpc_net:
+    aws_access_key: "{{ magnolia_aws_access_key }}"
+    aws_secret_key: "{{ magnolia_aws_secret_key }}"
+    name: "{{ aws_vpc_name }}"
+    cidr_block: "{{ aws_vpc_cidr }}"
+    region: "{{ aws_vpc_region }}"
+    state: present
+    tags:
+      description: "{{ aws_vpc_description }}"
+    tenancy: dedicated
+  register: vpc

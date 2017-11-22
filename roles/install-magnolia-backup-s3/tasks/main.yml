@@ -44,15 +44,31 @@
     dest: "{{ magnolia_backup_home }}"
     remote_src: yes
 
+- name: adjust permissions of scripts in bin
+  file:
+    path: "{{ magnolia_backup_bin }}/{{ item }}"
+    mode: 0755
+  with_items: "{{ backup_scripts }}"
+
 - name: add in extra config
   become: true
   template:
     src: tools.conf
-    dest: "{{ backup_bin }}/tools.conf"
+    dest: "{{ magnolia_backup_bin }}/tools.conf"
     mode: 0644
     owner: ec2-user
     group: ec2-user
     backup: yes
+
+- name: add in extra libraries from S3
+  aws_s3:
+    aws_access_key: "{{ magnolia_aws_access_key }}"
+    aws_secret_key: "{{ magnolia_aws_secret_key }}"
+    bucket: "{{ s3_backup_bucket }}"
+    object: "{{ s3_backup_lib_path}}/{{ item }}"
+    dest: "{{ magnolia_backup_lib }}/{{ item }}"
+    mode: get
+  with_items: "{{ s3_backup_lib_items }}"
 
 - name: get Magnolia JCR configs from S3
   aws_s3:
@@ -62,13 +78,7 @@
     object: "{{ s3_magnolia_path }}/{{ item }}"
     dest: "{{ magnolia_backup_home }}/config/{{ item }}"
     mode: get
-  with_items:
-    - jackrabbit-bundle-derby-search.xml
-    - jackrabbit-bundle-ingres-search.xml
-    - jackrabbit-bundle-postgres-search.xml
-    - jackrabbit-bundle-h2-search.xml
-    - jackrabbit-bundle-mysql-search.xml
-    - jackrabbit-memory-search.xml
+  with_items: "{{ s3_backup_config_items }}"
 
 - name: clean up
   file:

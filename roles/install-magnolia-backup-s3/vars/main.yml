@@ -3,15 +3,31 @@
 #
 
 magnolia_backup_home: /opt/magnolia/backups
+magnolia_backup_lib: /opt/magnolia/backups/magnolia-module-backup-2.2/lib
+magnolia_backup_bin: /opt/magnolia/backups/magnolia-module-backup-2.2/bin
 
 s3_backup_bucket: aw-experimental
 s3_backup_path: extras/backup
 s3_backup_bundle: magnolia-module-backup-2.2-bundle.tgz
+s3_backup_lib_path: extras/backup/lib
+
+s3_backup_config_items:
+    - jackrabbit-bundle-derby-search.xml
+    - jackrabbit-bundle-ingres-search.xml
+    - jackrabbit-bundle-postgres-search.xml
+    - jackrabbit-bundle-h2-search.xml
+    - jackrabbit-bundle-mysql-search.xml
+    - jackrabbit-memory-search.xml
+
+s3_backup_lib_items:
+  - mysql-connector-java-5.1.44.jar
 
 s3_magnolia_bucket: aw-experimental
 s3_magnolia_path: magnolia
 
-backup_bin: /opt/magnolia/backups/magnolia-module-backup-2.2/bin
+backup_scripts:
+  - backup
+  - restore
 
 # environment parameters for selected Jackrabbit configuration
 magnolia_deploy_db_url: jdbc:mysql://localhost:3306/magnolia
